@@ -14,7 +14,7 @@ export const passwordValidation = z.string()
     .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character");
 
 
-export const signUpShema = z.object({
+export const signUpSchema = z.object({
     username: usernameValidation,
     email: z.string().email({ message: "Invalid email address" }),
     password: passwordValidation,
