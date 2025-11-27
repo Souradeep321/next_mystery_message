@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function SuggestMessagesStream() {
   const [message, setMessage] = useState(""); // Accumulating text
@@ -33,13 +34,13 @@ export default function SuggestMessagesStream() {
 
   return (
     <div className="max-w-xl mx-auto p-4">
-      <button
+      <Button
         onClick={handleFetch}
         disabled={loading}
-        className="px-4 py-2 bg-blue-600 text-white rounded mb-4"
+        className="px-4 py-2  text-white rounded mb-4"
       >
         {loading ? "Generating..." : "Get Suggestions"}
-      </button>
+      </Button>
 
       <div className="p-4 border rounded bg-gray-50 whitespace-pre-wrap font-mono text-black">
         {message}
