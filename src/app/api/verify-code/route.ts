@@ -7,7 +7,10 @@ export async function POST(request: Request) {
 
     try {
         const body = await request.json();
-        const parsed = verifySchema.safeParse(body);
+
+        const parsed = verifySchema.safeParse({
+            verifyCode: body.verifyCode,
+        });
 
         if (!parsed.success) {
             return Response.json({
@@ -17,9 +20,10 @@ export async function POST(request: Request) {
             }, { status: 400 });
         }
 
-        const { username, verifyCode } = parsed.data;
-        const decodedUsername = decodeURIComponent(username);
-        const user = await UserModel.findOne({ username: decodedUsername });
+        const username = decodeURIComponent(body.username);
+        const { verifyCode } = parsed.data;
+
+        const user = await UserModel.findOne({ username });
 
         if (!user) {
             return Response.json(
@@ -32,7 +36,6 @@ export async function POST(request: Request) {
         const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
 
         if (isCodeValid && isCodeNotExpired) {
-            // Update the user's verification status
             user.isVerified = true;
             await user.save();
 
@@ -41,20 +44,18 @@ export async function POST(request: Request) {
                 message: 'Account verified successfully',
             }, { status: 200 });
         }
-        else if (!isCodeValid) {
-            // Code has expired
-            return Response.json(
-                { success: false, message: 'Verification code has expired. Please sign up again to get a new code.' },
-                { status: 400 }
-            );
-        }
-        else {
-            // Code is incorrect
+
+        if (!isCodeValid) {
             return Response.json(
                 { success: false, message: 'Incorrect verification code' },
                 { status: 400 }
             );
         }
+
+        return Response.json(
+            { success: false, message: 'Verification code has expired. Please sign up again to get a new code.' },
+            { status: 400 }
+        );
 
     } catch (error) {
         console.error("Error verifying code:", error);
