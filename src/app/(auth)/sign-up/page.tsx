@@ -82,18 +82,20 @@ const page = () => {
             const response = await axios.post<ApiResponse>('/api/sign-up', data)
             console.log(response.data)
             toast.success(response.data.message)
+            form.reset()
 
             router.replace(`/verify/${data.username}`);
-            setIsSubmitting(false) 
+            setIsSubmitting(false)
         } catch (error) {
             console.error('Error during sign-up:', error);
             const axiosError = error as AxiosError<ApiResponse>;
 
             let errorMessage = axiosError.response?.data.message;
             // ('There was a problem with your sign-up. Please try again.');
-
+            
             toast.error('Error during sign-up: ' + errorMessage);
             setIsSubmitting(false)
+            form.reset()
         }
     }
 
