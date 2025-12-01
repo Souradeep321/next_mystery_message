@@ -10,6 +10,7 @@ import { User } from "next-auth";
 // but in nextjs we can directly use getServerSession in the route file to get the user session
 // and form there we can get the user details 
 
+
 // toggle the isAcceptingMessages field for the logged-in user
 export async function POST(request: Request) {
     await dbConnect();
@@ -61,7 +62,7 @@ export async function POST(request: Request) {
             message: 'Error updating message acceptance status'
         }, { status: 500 });
     }
-}
+} 
 
 
 // if user is logged in, return the isAcceptingMessages status

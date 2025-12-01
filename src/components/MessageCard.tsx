@@ -43,8 +43,6 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
         onMessageDelete(String(message._id));
     };
 
-    
-
     return (
         <Card>
             <CardHeader>
