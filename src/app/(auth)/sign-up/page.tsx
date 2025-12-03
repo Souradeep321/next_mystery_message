@@ -271,13 +271,13 @@ const page = () => {
     useEffect(() => {
         const password = form.watch("password")
         let strength = 0
-        
+
         if (password.length >= 8) strength += 1
         if (/[A-Z]/.test(password)) strength += 1
         if (/[a-z]/.test(password)) strength += 1
         if (/[0-9]/.test(password)) strength += 1
         if (/[^A-Za-z0-9]/.test(password)) strength += 1
-        
+
         setPasswordStrength(strength)
     }, [form.watch("password")])
 
@@ -356,12 +356,12 @@ const page = () => {
                                             )}
                                             {!isCheckingUsername && usernameMessage && (
                                                 <>
-                                                    {usernameMessage === 'Username is unique' ? (
+                                                    {usernameMessage === 'Username is available.' ? (
                                                         <CheckCircle className="h-4 w-4 text-emerald-500" />
                                                     ) : (
                                                         <XCircle className="h-4 w-4 text-red-500" />
                                                     )}
-                                                    <p className={`text-sm ${usernameMessage === 'Username is unique' ? 'text-emerald-400' : 'text-red-400'}`}>
+                                                    <p className={`text-sm ${usernameMessage === 'Username is available.' ? 'text-emerald-400' : 'text-red-400'}`}>
                                                         {usernameMessage}
                                                     </p>
                                                 </>
@@ -433,26 +433,25 @@ const page = () => {
                                                 </button>
                                             </div>
                                         </FormControl>
-                                        
+
                                         {/* Password Strength Indicator */}
                                         {field.value && (
                                             <div className="mt-3 space-y-2">
                                                 <div className="flex justify-between text-xs">
                                                     <span className="text-gray-400">Password strength:</span>
-                                                    <span className={`font-medium ${
-                                                        passwordStrength === 0 ? "text-gray-400" :
+                                                    <span className={`font-medium ${passwordStrength === 0 ? "text-gray-400" :
                                                         passwordStrength <= 2 ? "text-red-400" :
-                                                        passwordStrength === 3 ? "text-yellow-400" :
-                                                        "text-emerald-400"
-                                                    }`}>
+                                                            passwordStrength === 3 ? "text-yellow-400" :
+                                                                "text-emerald-400"
+                                                        }`}>
                                                         {passwordStrength === 0 ? "None" :
-                                                         passwordStrength <= 2 ? "Weak" :
-                                                         passwordStrength === 3 ? "Good" :
-                                                         passwordStrength === 4 ? "Strong" : "Very Strong"}
+                                                            passwordStrength <= 2 ? "Weak" :
+                                                                passwordStrength === 3 ? "Good" :
+                                                                    passwordStrength === 4 ? "Strong" : "Very Strong"}
                                                     </span>
                                                 </div>
                                                 <div className="h-1.5 w-full bg-gray-700 rounded-full overflow-hidden">
-                                                    <div 
+                                                    <div
                                                         className={`h-full ${getPasswordStrengthColor()} transition-all duration-300`}
                                                         style={{ width: `${passwordStrength * 20}%` }}
                                                     ></div>
@@ -523,8 +522,8 @@ const page = () => {
                         <div className="text-center">
                             <p className="text-gray-400">
                                 Already have an account?{' '}
-                                <Link 
-                                    href="/sign-in" 
+                                <Link
+                                    href="/sign-in"
                                     className="font-medium text-emerald-400 hover:text-emerald-300 hover:underline transition-colors"
                                 >
                                     Sign in instead
