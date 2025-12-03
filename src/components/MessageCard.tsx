@@ -229,20 +229,21 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
     };
 
 
-    const formatDate = (dateString: string) => {
+    const formatDate = (date: string | Date) => {
         try {
-            const date = new Date(dateString);
+            const d = typeof date === "string" ? new Date(date) : date;
             const now = new Date();
-            const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+            const diffInHours = Math.floor((now.getTime() - d.getTime()) / (1000 * 60 * 60));
 
             if (diffInHours < 1) return 'Just now';
             if (diffInHours < 24) return `${diffInHours}h ago`;
             if (diffInHours < 168) return `${Math.floor(diffInHours / 24)}d ago`;
-            return date.toLocaleDateString();
-        } catch (error) {
+            return d.toLocaleDateString();
+        } catch {
             return 'Recently';
         }
     };
+
 
     return (
         <Card className="relative overflow-hidden hover:shadow-lg transition-shadow duration-300">
